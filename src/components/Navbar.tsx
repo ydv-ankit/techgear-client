@@ -18,7 +18,7 @@ const navItems = [
 
 export function Navbar() {
   return (
-    <nav className="shadow-sm shadow-slate-500 p-2 w-full">
+    <nav className="p-2 w-full">
       <div className="md:w-3/5 flex justify-between mx-auto">
         <div>Logo</div>
         <div>

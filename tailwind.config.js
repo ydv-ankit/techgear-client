@@ -13,8 +13,10 @@ module.exports = {
     },
     extend: {
       colors: {
-        "dark-background": "#14213d",
-        "dark-text": "#4cc9f0",
+        "dark-background": "#000101",
+        "dark-component": "#1f1f1f",
+        "dark-text": "#dbdbda",
+        "dark-selected": "#bb86fc",
         "light-background": "#e0fbfc",
         "light-text": "#293241",
       },

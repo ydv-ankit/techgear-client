@@ -5,6 +5,7 @@ import { RouteNotFound } from "./routes/RouteNotFound";
 import Dashboard from "./routes/Dashboard";
 import Products from "./routes/Products";
 import { ThemeProvider } from "./hooks/context/theme-provider";
+import { Toaster } from "./components/ui/toaster";
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
           </Routes>
         </BrowserRouter>
       </div>
+      <Toaster />
     </ThemeProvider>
   );
 }
