@@ -1,7 +1,14 @@
 import { useForm } from "react-hook-form";
 import { Input } from "./ui/input";
 import { z } from "zod";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from "./ui/form";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "./ui/form";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -13,14 +20,19 @@ const ProductForm = z.object({
   name: z.string().min(2, "product name required"),
   price: z.number().min(0, "price must be greater than 0"),
   image: z.any(),
-  discount: z.number().min(0, "discount can't be negative").max(100, "discount can't be greater than 100"),
+  discount: z
+    .number()
+    .min(0, "discount can't be negative")
+    .max(100, "discount can't be greater than 100"),
 });
 
 export function AddProductForm() {
   const form = useForm<z.infer<typeof ProductForm>>({
     resolver: zodResolver(ProductForm),
   });
-  const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(
+    null,
+  );
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -61,7 +73,10 @@ export function AddProductForm() {
   return (
     <div className="h-screen flex justify-center mt-24">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-4"
+        >
           <FormField
             control={form.control}
             name="name"
@@ -80,7 +95,13 @@ export function AddProductForm() {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder="Price" {...field} onChange={(e) => field.onChange(parseInt(e.target.value, 10))} />
+                  <Input
+                    placeholder="Price"
+                    {...field}
+                    onChange={(e) =>
+                      field.onChange(parseInt(e.target.value, 10))
+                    }
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -92,7 +113,12 @@ export function AddProductForm() {
             render={() => (
               <FormItem>
                 {imagePreview && (
-                  <div className={cn("w-80 h-auto max-h-96 rounded-md overflow-hidden", imagePreview ? "block" : "hidden")}>
+                  <div
+                    className={cn(
+                      "w-80 h-auto max-h-96 rounded-md overflow-hidden",
+                      imagePreview ? "block" : "hidden",
+                    )}
+                  >
                     <img src={imagePreview as string} alt="product preview" />
                   </div>
                 )}
@@ -110,7 +136,13 @@ export function AddProductForm() {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input placeholder="Discount % (if any)" {...field} onChange={(e) => field.onChange(parseInt(e.target.value, 10))} />
+                  <Input
+                    placeholder="Discount % (if any)"
+                    {...field}
+                    onChange={(e) =>
+                      field.onChange(parseInt(e.target.value, 10))
+                    }
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

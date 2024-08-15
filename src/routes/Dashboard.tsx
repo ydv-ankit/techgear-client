@@ -36,7 +36,11 @@ export default function Dashboard() {
     <div className="flex flex-1 h-full">
       <div className="flex flex-col items-center w-64 pt-4 mb-2 border-r dark:border-dark-component">
         <div className="flex w-full p-4">
-          <img src="https://avatar.iran.liara.run/public" alt="profile" className="w-12 ring-1 ring-white rounded-full" />
+          <img
+            src="https://avatar.iran.liara.run/public"
+            alt="profile"
+            className="w-12 ring-1 ring-white rounded-full"
+          />
           <div className="flex flex-col ml-4">
             <span className="text-dark-text">Full name</span>
             <span className="text-dark-text/50 text-sm">email@id.com</span>
@@ -48,9 +52,12 @@ export default function Dashboard() {
               key={idx}
               className={cn(
                 "w-full rounded-none mb-1 dark:bg-transparent dark:text-white dark:hover:bg-dark-selected/20",
-                selectedTab === tab.action ? "dark:bg-dark-selected dark:hover:bg-dark-selected" : ""
+                selectedTab === tab.action
+                  ? "dark:bg-dark-selected dark:hover:bg-dark-selected"
+                  : "",
               )}
-              onClick={() => setSelectedTab(tab.action)}>
+              onClick={() => setSelectedTab(tab.action)}
+            >
               {tab.label}
             </Button>
           ))}

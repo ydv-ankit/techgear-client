@@ -14,6 +14,10 @@ const navItems = [
     name: "Orders",
     href: "/orders",
   },
+  {
+    name: "Sign In",
+    href: "/auth",
+  },
 ];
 
 export function Navbar() {
@@ -26,7 +30,14 @@ export function Navbar() {
             {navItems.map((item, idx) => {
               return (
                 <li className="px-2 py-1" key={idx}>
-                  <NavLink to={item.href} className={({ isActive }) => (isActive ? "bg-green-400 rounded-md text-zinc-700 p-2" : "p-2")}>
+                  <NavLink
+                    to={item.href}
+                    className={({ isActive }) =>
+                      isActive
+                        ? "bg-green-400 rounded-md text-zinc-700 p-2"
+                        : "p-2"
+                    }
+                  >
                     {item.name}
                   </NavLink>
                 </li>
