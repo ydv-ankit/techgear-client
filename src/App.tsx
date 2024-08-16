@@ -3,7 +3,6 @@ import Home from "./routes/Home";
 import { Navbar } from "./components/Navbar";
 import { RouteNotFound } from "./routes/RouteNotFound";
 import Dashboard from "./routes/Dashboard";
-import Products from "./routes/Products";
 import { ThemeProvider } from "./hooks/context/theme-provider";
 import { Toaster } from "./components/ui/toaster";
 import Authentication from "./routes/Authentication";
@@ -21,7 +20,6 @@ export default function App() {
             <Routes>
               <Route path="/">
                 <Route path="/" element={<Home />} />
-                <Route path="products" element={<Products />} />
                 <Route path="auth" element={<Authentication />} />
                 <Route path="dashboard" element={<Dashboard />} />
               </Route>

@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/components/ui/use-toast";
@@ -26,7 +26,7 @@ const ProductForm = z.object({
     .max(100, "discount can't be greater than 100"),
 });
 
-export function AddProductForm() {
+export function AddProductForm(): React.ReactElement {
   const { error, loading, requestFunction, responseData } = useAxiosQuery();
 
   const form = useForm<z.infer<typeof ProductForm>>({

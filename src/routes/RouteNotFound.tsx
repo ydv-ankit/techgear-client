@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
+import React from "react";
 import { NavLink } from "react-router-dom";
 
-export function RouteNotFound() {
+export function RouteNotFound(): React.ReactElement {
   return (
     <div className="w-full h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute top-50% left-50% text-9xl md:text-[490px] text-gray-600">

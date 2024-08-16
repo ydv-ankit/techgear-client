@@ -35,7 +35,7 @@ const signUpFormFields = z
     path: ["confirmPassword"],
   });
 
-export default function Authentication(): React.ReactNode {
+export default function Authentication(): React.ReactElement {
   const { requestFunction, loading, error, responseData } = useAxiosQuery<{
     user: object;
   }>();

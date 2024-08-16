@@ -7,19 +7,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { RequestMethod, useAxiosQuery } from "@/hooks/useAxiosQuery";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { toast } from "../ui/use-toast";
+import { ProductData } from "@/types/product";
 
-type PropData = {
-  id: string;
-  name: string;
-  image: string;
-  price: number;
-  discount: number;
-  rating: number;
-};
-
-export const ProductTable = ({ data }: { data: PropData[] }) => {
+export const ProductTable = ({
+  data,
+}: {
+  data: ProductData[];
+}): React.ReactElement => {
   const { error, loading, requestFunction, responseData } = useAxiosQuery();
   console.log(error, loading, responseData);
 
@@ -64,7 +60,7 @@ export const ProductTable = ({ data }: { data: PropData[] }) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data.map((product: PropData, idx: number) => (
+        {data.map((product: ProductData, idx: number) => (
           <TableRow key={idx}>
             <TableCell className="hover:underline cursor-pointer font-medium">
               {idx + 1}

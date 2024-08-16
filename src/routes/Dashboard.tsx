@@ -2,7 +2,7 @@ import { AddProductForm } from "@/components/dashboard/AddProductForm";
 import Products from "@/components/dashboard/Products";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import React, { useState } from "react";
 
 enum Tab {
   OVERVIEW,
@@ -35,7 +35,7 @@ const tabs: tabsType[] = [
   },
 ];
 
-export default function Dashboard() {
+export default function Dashboard(): React.ReactElement {
   const [selectedTab, setSelectedTab] = useState<Tab>(Tab.OVERVIEW);
 
   return (

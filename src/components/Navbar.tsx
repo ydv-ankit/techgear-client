@@ -1,14 +1,11 @@
 import { NavLink } from "react-router-dom";
 import { ThemeToggle } from "./ThemeToggle";
+import React from "react";
 
 const navItems = [
   {
     name: "Home",
     href: "/",
-  },
-  {
-    name: "Products",
-    href: "/products",
   },
   {
     name: "Orders",
@@ -20,7 +17,7 @@ const navItems = [
   },
 ];
 
-export function Navbar() {
+export function Navbar(): React.ReactElement {
   return (
     <nav className="p-2 w-full">
       <div className="md:w-3/5 flex justify-between mx-auto">

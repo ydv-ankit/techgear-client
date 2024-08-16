@@ -1,8 +1,8 @@
 import { RequestMethod, useAxiosQuery } from "@/hooks/useAxiosQuery";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { ProductTable } from "./ProductTable";
 
-export default function Products() {
+export default function Products(): React.ReactElement {
   const { error, loading, requestFunction, responseData } = useAxiosQuery();
 
   useEffect(() => {
