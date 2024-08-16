@@ -10,7 +10,7 @@ export const ProductCard = ({
   data: ProductData;
 }): React.ReactElement => {
   return (
-    <div className="sm:flex-1 border border-slate-600 flex flex-col justify-between p-2 rounded-sm h-[400px] gap-1">
+    <div className="sm:flex-1 border border-slate-600 flex flex-col justify-between p-2 rounded-sm h-[400px] gap-1 dark:bg-dark-component">
       <div className="w-full h-56 rounded-lg overflow-hidden">
         <img
           src={data.image}

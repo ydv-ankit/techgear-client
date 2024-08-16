@@ -17,6 +17,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useAppDispatch } from "@/hooks/store";
 import { useNavigate } from "react-router-dom";
+import { login } from "@/lib/store/features/authSlice";
 
 const signInFormFields = z.object({
   email: z.string().email(),
@@ -36,9 +37,7 @@ const signUpFormFields = z
   });
 
 export default function Authentication(): React.ReactElement {
-  const { requestFunction, loading, error, responseData } = useAxiosQuery<{
-    user: object;
-  }>();
+  const { requestFunction, loading, error, responseData } = useAxiosQuery();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -82,7 +81,7 @@ export default function Authentication(): React.ReactElement {
         description: error,
       });
     } else if (responseData) {
-      dispatch({ type: "auth", payload: responseData?.user });
+      dispatch(login(responseData.data.user));
       navigate("/");
     }
   }, [error, responseData]);
