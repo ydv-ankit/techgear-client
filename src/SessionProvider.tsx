@@ -15,7 +15,7 @@ export default function SessionProvider(): null {
           dispatch({ type: "auth", payload: res?.data?.data });
           return;
         })
-        .catch((err: any) => {
+        .catch(() => {
           return;
         });
     })();
