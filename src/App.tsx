@@ -9,6 +9,7 @@ import Authentication from "./routes/Authentication";
 import SessionProvider from "./SessionProvider";
 import { Provider } from "react-redux";
 import { store } from "./lib/store/reduxStore";
+import Cart from "./routes/Cart";
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
               <Route path="/">
                 <Route path="/" element={<Home />} />
                 <Route path="auth" element={<Authentication />} />
+                <Route path="cart" element={<Cart />} />
                 <Route path="dashboard" element={<Dashboard />} />
               </Route>
               <Route path="*" element={<RouteNotFound />} />

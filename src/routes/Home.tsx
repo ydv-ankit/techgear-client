@@ -24,7 +24,7 @@ export default function Home(): React.ReactElement {
   }, [error, responseData]);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 p-4 gap-2 overflow-auto h-full">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 p-4 gap-4 overflow-auto h-full">
       {loading && <div>Loading...</div>}
       {error && <div>{error}</div>}
       {responseData &&

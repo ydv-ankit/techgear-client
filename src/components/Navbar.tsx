@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { ThemeToggle } from "./ThemeToggle";
 import React, { useEffect, useState } from "react";
 import { useAppSelector } from "@/hooks/store";
-import { CartItem } from "./Cart";
+import { CartIcon } from "./CartIcon";
 import { Logout } from "./Logout";
 import { cn } from "@/lib/utils";
 
@@ -46,7 +46,7 @@ export function Navbar(): React.ReactElement {
   }, [isAuthenticated]);
 
   return (
-    <nav className="p-2 w-full">
+    <nav className="p-2 w-full border-b">
       <div className="md:w-3/5 flex justify-between mx-auto">
         <div>Logo</div>
         <div>
@@ -59,9 +59,9 @@ export function Navbar(): React.ReactElement {
                     className={({ isActive }) =>
                       cn(
                         isActive
-                          ? "bg-green-400 rounded-md text-zinc-700 p-2"
-                          : "p-2",
-                        "selection:text-current",
+                          ? "bg-green-400 text-zinc-700 p-2"
+                          : "p-2 hover:bg-green-800",
+                        "selection:text-current rounded-md",
                       )
                     }
                   >
@@ -73,7 +73,19 @@ export function Navbar(): React.ReactElement {
           </ul>
         </div>
         <div className="flex justify-center items-center gap-2 md:gap-4">
-          {isAuthenticated && <CartItem />}
+          <NavLink
+            to={"/cart"}
+            className={({ isActive }) =>
+              cn(
+                isActive
+                  ? "bg-green-400 text-zinc-700 p-2"
+                  : "p-2 hover:bg-green-800",
+                "rounded-full",
+              )
+            }
+          >
+            {isAuthenticated && <CartIcon />}
+          </NavLink>
           {isAuthenticated && <Logout />}
           <ThemeToggle />
         </div>

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/hooks/store";
 import { logout } from "@/lib/store/features/authSlice";
 import { ExitIcon } from "@radix-ui/react-icons";
+import { emptyCart } from "@/lib/store/features/cart";
 
 export const Logout = (): React.ReactElement => {
   const { error, requestFunction, responseData } = useAxiosQuery();
@@ -27,13 +28,17 @@ export const Logout = (): React.ReactElement => {
     }
     if (responseData) {
       dispatch(logout());
+      dispatch(emptyCart());
       navigate("/");
     }
   }, [error, responseData]);
 
   return (
-    <div className="flex items-center justify-center cursor-pointer">
-      <ExitIcon onClick={onLogout} />
+    <div
+      className="flex items-center justify-center cursor-pointer dark:hover:bg-green-800 p-2 rounded-full"
+      onClick={onLogout}
+    >
+      <ExitIcon />
     </div>
   );
 };
