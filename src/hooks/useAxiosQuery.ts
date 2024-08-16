@@ -41,7 +41,6 @@ export const useAxiosQuery = <T = any>(): ResponseType => {
       };
       if (args.headers) axiosRequestObject.headers = args.headers;
       const resp = await axios(axiosRequestObject);
-      console.log(resp);
       setResponseData(resp?.data);
       return resp;
     } catch (error: any) {

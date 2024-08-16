@@ -1,4 +1,5 @@
-import { AddProductForm } from "@/components/AddProductForm";
+import { AddProductForm } from "@/components/dashboard/AddProductForm";
+import Products from "@/components/dashboard/Products";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
@@ -6,6 +7,7 @@ import { useState } from "react";
 enum Tab {
   OVERVIEW,
   PRODUCTS,
+  ADDPRODUCT,
   ORDERS,
 }
 
@@ -24,6 +26,10 @@ const tabs: tabsType[] = [
     action: Tab.PRODUCTS,
   },
   {
+    label: "Add Product",
+    action: Tab.ADDPRODUCT,
+  },
+  {
     label: "Orders",
     action: Tab.ORDERS,
   },
@@ -34,7 +40,7 @@ export default function Dashboard() {
 
   return (
     <div className="flex flex-1 h-full">
-      <div className="flex flex-col items-center w-64 pt-4 mb-2 border-r dark:border-dark-component">
+      <div className="flex flex-col items-center w-1/6 pt-4 mb-2 border-r dark:border-dark-component">
         <div className="flex w-full p-4">
           <img
             src="https://avatar.iran.liara.run/public"
@@ -63,8 +69,9 @@ export default function Dashboard() {
           ))}
         </div>
       </div>
-      <div className="flex-1 dark:bg-dark-background bg-slate-300 border-t border-t-dark-component p-2">
-        {selectedTab === Tab.PRODUCTS && <AddProductForm />}
+      <div className="dark:bg-dark-background bg-slate-300 border-t border-t-dark-component p-2 w-5/6">
+        {selectedTab === Tab.PRODUCTS && <Products />}
+        {selectedTab === Tab.ADDPRODUCT && <AddProductForm />}
       </div>
     </div>
   );

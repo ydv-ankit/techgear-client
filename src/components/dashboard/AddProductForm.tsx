@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Input } from "./ui/input";
+import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import {
   Form,
@@ -8,12 +8,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
-import { Button } from "./ui/button";
+} from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "./ui/use-toast";
+import { toast } from "@/components/ui/use-toast";
 import { RequestMethod, useAxiosQuery } from "@/hooks/useAxiosQuery";
 
 const ProductForm = z.object({
