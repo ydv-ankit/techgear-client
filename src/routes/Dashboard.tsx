@@ -64,7 +64,7 @@ export default function Dashboard() {
         </div>
       </div>
       <div className="flex-1 dark:bg-dark-background bg-slate-300 border-t border-t-dark-component p-2">
-        <AddProductForm />
+        {selectedTab === Tab.PRODUCTS && <AddProductForm />}
       </div>
     </div>
   );

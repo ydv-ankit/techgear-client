@@ -4,17 +4,17 @@ import { z } from "zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "./ui/form";
 import { Button } from "./ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import { toast } from "./ui/use-toast";
+import { RequestMethod, useAxiosQuery } from "@/hooks/useAxiosQuery";
 
 const ProductForm = z.object({
   name: z.string().min(2, "product name required"),
@@ -27,8 +27,16 @@ const ProductForm = z.object({
 });
 
 export function AddProductForm() {
+  const { error, loading, requestFunction, responseData } = useAxiosQuery();
+
   const form = useForm<z.infer<typeof ProductForm>>({
     resolver: zodResolver(ProductForm),
+    defaultValues: {
+      discount: 0,
+      price: 0,
+      image: null,
+      name: "",
+    },
   });
   const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(
     null,
@@ -47,28 +55,30 @@ export function AddProductForm() {
   };
 
   const onSubmit = async (data: z.infer<typeof ProductForm>) => {
-    try {
-      const resp = await axios({
-        url: `${import.meta.env.VITE_SERVER_URL}/api/v1/product/create`,
-        method: "POST",
-        data,
-      });
-      console.log(resp);
-    } catch (error: any) {
-      console.log(error);
-      if (error?.request!.status === 401) {
-        toast({
-          title: "Error",
-          description: "Unauthorised",
-        });
-      } else {
-        toast({
-          title: "Error",
-          description: "Something went wrong",
-        });
-      }
-    }
+    await requestFunction({
+      urlPath: `${import.meta.env.VITE_SERVER_URL}/api/v1/product/create`,
+      method: RequestMethod.POST,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      data,
+    });
   };
+
+  useEffect(() => {
+    if (error) {
+      toast({
+        title: "Error",
+        description: error,
+      });
+    }
+    if (responseData) {
+      toast({
+        title: "Success",
+        description: responseData?.message || "Product created",
+      });
+    }
+  }, [error, responseData]);
 
   return (
     <div className="h-screen flex justify-center mt-24">
@@ -122,10 +132,10 @@ export function AddProductForm() {
                     <img src={imagePreview as string} alt="product preview" />
                   </div>
                 )}
+                <FormLabel>Product image </FormLabel>
                 <FormControl>
                   <Input type="file" onChange={handleFileChange} required />
                 </FormControl>
-                <FormDescription>Product image </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -148,7 +158,13 @@ export function AddProductForm() {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button
+            type="submit"
+            className="dark:bg-dark-selected dark:hover:bg-dark-selected/80 dark:text-white"
+            disabled={loading}
+          >
+            {loading ? "Creating..." : "Submit"}
+          </Button>
         </form>
       </Form>
     </div>
