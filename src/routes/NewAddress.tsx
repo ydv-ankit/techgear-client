@@ -21,7 +21,7 @@ const addressFormFields = z.object({
 });
 
 export default function NewAddress() {
-  const { error, loading, requestFunction, responseData } = useAxiosQuery();
+  const { error, loading, requestFunction } = useAxiosQuery();
 
   const navigate = useNavigate();
   const urlQuery = new URLSearchParams(useLocation().search);
