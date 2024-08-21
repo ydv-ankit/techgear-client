@@ -17,6 +17,12 @@ module.exports = {
       },
     },
     extend: {
+      backgroundImage: {
+        "custom-gradient":
+          "linear-gradient(135deg, rgba(2,0,36,1) 0%, rgba(70,7,120,1) 50%, rgba(39,27,99,1) 100%)",
+        "custom-gradient-2":
+          "linear-gradient(72deg, rgba(0,14,115,1) 0%, rgba(55,55,218,1) 50%, rgba(0,75,171,1) 100%)",
+      },
       colors: {
         "dark-background": "#000101",
         "dark-component": "#1f1f1f",

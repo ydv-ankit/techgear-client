@@ -46,7 +46,7 @@ export function Navbar(): React.ReactElement {
   }, [isAuthenticated]);
 
   return (
-    <nav className="p-2 w-full border-b">
+    <nav className="p-2 w-full border-b border-b-blue-900">
       <div className="md:w-3/5 flex justify-between mx-auto">
         <div>Logo</div>
         <div>

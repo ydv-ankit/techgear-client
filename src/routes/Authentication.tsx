@@ -82,6 +82,10 @@ export default function Authentication(): React.ReactElement {
       });
     } else if (responseData) {
       dispatch(login(responseData.data.user));
+      toast({
+        title: "Success",
+        description: "Logged in successfully",
+      });
       navigate("/");
     }
   }, [error, responseData]);
@@ -90,7 +94,7 @@ export default function Authentication(): React.ReactElement {
     <div className="flex justify-center items-center h-screen">
       <Tabs
         defaultValue="signin"
-        className="w-[400px] border border-zinc-800 rounded-md p-2 pb-4"
+        className="w-[400px] border border-zinc-800 rounded-md p-2 pb-4 bg-custom-gradient-2"
       >
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="signin">Sign In</TabsTrigger>

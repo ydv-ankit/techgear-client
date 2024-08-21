@@ -10,12 +10,14 @@ import SessionProvider from "./SessionProvider";
 import { Provider } from "react-redux";
 import { store } from "./lib/store/reduxStore";
 import Cart from "./routes/Cart";
+import Profile from "./routes/Profile";
+import NewAddress from "./routes/NewAddress";
 
 export default function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Provider store={store}>
-        <div className="overflow-hidden h-screen bg-light-background text-light-text dark:bg-dark-background dark:text-dark-text">
+        <div className="overflow-hidden h-screen bg-light-background text-light-text dark:bg-custom-gradient dark:text-dark-text">
           <BrowserRouter>
             <Navbar />
             <Routes>
@@ -23,7 +25,11 @@ export default function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="auth" element={<Authentication />} />
                 <Route path="cart" element={<Cart />} />
-                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="profile" element={<Profile />} />
+                <Route path="profile/address" element={<NewAddress />} />
+                <Route path="/dashboard">
+                  <Route path="/dashboard" element={<Dashboard />} />
+                </Route>
               </Route>
               <Route path="*" element={<RouteNotFound />} />
             </Routes>

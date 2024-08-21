@@ -13,7 +13,7 @@ export const CartIcon = (): React.ReactElement => {
   return (
     <div className="relative flex items-center justify-center cursor-pointer">
       {noOfItems > 0 && (
-        <div className="absolute -top-2 left-3 w-4 h-4 rounded-full bg-lime-800 text-white flex items-center justify-center p-1 text-sm">
+        <div className="absolute -top-2 left-3 w-4 h-4 rounded-full bg-lime-300 text-blue-900 flex items-center justify-center p-1 text-[12px] font-bold">
           {noOfItems > 9 ? "9+" : noOfItems}
         </div>
       )}
