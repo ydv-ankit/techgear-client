@@ -51,7 +51,7 @@ export default function Checkout() {
     }
   }, [error]);
 
-  if (loading) return;
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div className="flex flex-col items-center gap-4">
@@ -60,6 +60,7 @@ export default function Checkout() {
         <div className="font-bold">
           {orderStatus === "SUCCESS" ? (
             <div className="text-xl text-green-500">
+              <div>Success...</div>
               Thank you for ordering !
             </div>
           ) : (
