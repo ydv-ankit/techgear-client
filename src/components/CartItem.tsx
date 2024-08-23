@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/store";
 import { RequestMethod, useAxiosQuery } from "@/hooks/useAxiosQuery";
 import { remove } from "@/lib/store/features/cart";
 import { cn } from "@/lib/utils";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { NavLink } from "react-router-dom";
 import { toast } from "./ui/use-toast";
 import { ProductData } from "@/types/product";
@@ -13,32 +13,44 @@ export const CartItems = () => {
   const { error, loading, requestFunction } = useAxiosQuery();
   const dispatch = useAppDispatch();
 
+  // Memoize the total price calculation
+  const totalPrice = useMemo(() => {
+    const total = items.reduce(
+      (acc, item) =>
+        acc +
+        (item.discount > 0
+          ? item.price - (item.discount * item.price) / 100
+          : item.price),
+      0,
+    );
+    return parseFloat(total as unknown as string).toFixed(2);
+  }, [items]);
+
   const onCreateOrder = async () => {
-    const total_price = items
-      .reduce(
-        (acc, item) =>
-          acc +
-          (item.discount > 0
-            ? item.price - (item.discount * item.price) / 100
-            : item.price),
-        0,
-      )
-      .toFixed(2);
     const products = items.map((item: ProductData) => item.name);
     const orderPayload = {
-      total_price,
+      total_price: totalPrice,
       products,
     };
-    const responseData = await requestFunction({
-      urlPath: `${import.meta.env.VITE_SERVER_URL}/api/v1/order`,
-      method: RequestMethod.POST,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: orderPayload,
-    });
-    const redirectLink = responseData?.data.data.link;
-    window.location = redirectLink;
+    try {
+      const responseData = await requestFunction({
+        urlPath: `${import.meta.env.VITE_SERVER_URL}/api/v1/order`,
+        method: RequestMethod.POST,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: orderPayload,
+      });
+      const redirectLink = responseData?.data.data.link;
+      if (redirectLink) {
+        window.location = redirectLink;
+      }
+    } catch (err) {
+      toast({
+        title: "Error",
+        description: "An error occurred while creating the order.",
+      });
+    }
   };
 
   const onRemove = (id: string) => {
@@ -54,16 +66,19 @@ export const CartItems = () => {
     }
   }, [error]);
 
+  if (items.length === 0) {
+    return (
+      <div className="text-center text-lg mt-4">
+        <div>No items in cart</div>
+        <NavLink to={"/"}>
+          <Button className="mt-4">Go to Home</Button>
+        </NavLink>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col items-center">
-      {items.length === 0 && (
-        <div className="text-center text-lg mt-4">
-          <div>No items in cart</div>
-          <NavLink to={"/"}>
-            <Button className="mt-4">Go to Home</Button>
-          </NavLink>
-        </div>
-      )}
       {items.map((item) => (
         <div
           key={item.id}
@@ -75,6 +90,7 @@ export const CartItems = () => {
                 src={item.image}
                 alt={item.name}
                 className="w-14 h-14 object-cover"
+                loading="lazy"
               />
             </div>
             <div>
@@ -85,7 +101,6 @@ export const CartItems = () => {
                     item.discount > 0
                       ? "line-through text-sm text-slate-400"
                       : "text-white",
-                    "",
                   )}
                 >
                   {"$ "}
@@ -95,10 +110,9 @@ export const CartItems = () => {
                   <div>
                     {"$ "}
                     {parseFloat(
-                      (
-                        item.price -
-                        (item.discount * item.price) / 100
-                      ).toString(),
+                      (item.price - (item.discount * item.price) / 100).toFixed(
+                        2,
+                      ),
                     ).toFixed(2)}
                   </div>
                 )}
@@ -115,36 +129,15 @@ export const CartItems = () => {
           </div>
         </div>
       ))}
-      {items.length > 0 && (
-        <div className="flex flex-col">
-          <div>
-            <h3 className="text-lg">
-              {"Total Items: "}
-              {items.length}
-            </h3>
-            <div className="text-xl">
-              {"Total Price: $ "}
-              {items
-                .reduce(
-                  (acc, item) =>
-                    acc +
-                    (item.discount > 0
-                      ? item.price - (item.discount * item.price) / 100
-                      : item.price),
-                  0,
-                )
-                .toFixed(2)}
-            </div>
-          </div>
-          <Button
-            className="mt-4"
-            onClick={() => onCreateOrder()}
-            disabled={loading}
-          >
-            Checkout
-          </Button>
+      <div className="flex flex-col">
+        <div>
+          <h3 className="text-lg">Total Items: {items.length}</h3>
+          <div className="text-xl">Total Price: $ {totalPrice}</div>
         </div>
-      )}
+        <Button className="mt-4" onClick={onCreateOrder} disabled={loading}>
+          Checkout
+        </Button>
+      </div>
     </div>
   );
 };

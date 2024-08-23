@@ -7,8 +7,6 @@ export default function SessionProvider(): null {
   const dispatch = useAppDispatch();
   useEffect(() => {
     (() => {
-      console.log("logging");
-
       axios({
         method: "GET",
         url: `${import.meta.env.VITE_SERVER_URL}/api/v1/auth/refresh`,
