@@ -26,10 +26,6 @@ export function Navbar(): React.ReactElement {
           name: "Profile",
           href: "/profile",
         },
-        {
-          name: "Orders",
-          href: "/orders",
-        },
       ]);
     } else {
       setNavItems([

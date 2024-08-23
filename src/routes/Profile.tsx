@@ -1,16 +1,16 @@
 import { AddressCard } from "@/components/profiile/AddressCard";
+import { Order } from "@/components/profiile/Order";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { RequestMethod, useAxiosQuery } from "@/hooks/useAxiosQuery";
 import { cn } from "@/lib/utils";
-import { UserAddressType } from "@/types/user";
+import { UserAddressType, UserOrder } from "@/types/user";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 enum UserTabs {
   Addresses = "Addresses",
   Orders = "Orders",
-  Transactions = "Transactions",
 }
 
 export default function Profile() {
@@ -18,8 +18,7 @@ export default function Profile() {
 
   const [activeTab, setActiveTab] = useState<UserTabs>(UserTabs.Addresses);
   const [addresses, setAddresses] = useState<UserAddressType[]>([]);
-  //   const [orders, setOrders] = useState<UserOrder[]>([]);
-  //   const [transactions, setTransactions] = useState([]);
+  const [orders, setOrders] = useState<UserOrder[]>([]);
 
   useEffect(() => {
     if (activeTab === UserTabs.Addresses) {
@@ -29,7 +28,7 @@ export default function Profile() {
       });
     } else if (activeTab === UserTabs.Orders) {
       requestFunction({
-        urlPath: `${import.meta.env.VITE_SERVER_URL}/api/v1/product/create`,
+        urlPath: `${import.meta.env.VITE_SERVER_URL}/api/v1/order`,
         method: RequestMethod.GET,
       });
     }
@@ -47,12 +46,13 @@ export default function Profile() {
   useEffect(() => {
     if (responseData) {
       activeTab === UserTabs.Addresses && setAddresses(responseData.data);
+      activeTab === UserTabs.Orders && setOrders(responseData.data);
     }
   }, [responseData]);
 
   return (
-    <div className="h-screen bg-custom-gradient-2 flex">
-      <div className="w-96 h-full bg-blue-900">
+    <div className="h-screen dark:bg-custom-gradient-2 flex">
+      <div className="w-96 h-full dark:bg-blue-900 bg-white">
         <div className="flex flex-col gap-2 items-center py-4">
           <div className="w-24 h-24 rounded-full overflow-hidden ring-2 ring-white">
             <img
@@ -86,17 +86,6 @@ export default function Profile() {
           >
             Orders
           </Button>
-          <Button
-            className={cn(
-              activeTab === UserTabs.Transactions
-                ? "dark:bg-dark-selected dark:text-white dark:hover:bg-dark-selected"
-                : "",
-              "w-[90%]",
-            )}
-            onClick={() => setActiveTab(UserTabs.Transactions)}
-          >
-            Transactions
-          </Button>
         </div>
       </div>
       <div className="w-full p-2">
@@ -123,6 +112,23 @@ export default function Profile() {
               <NavLink to="/profile/address?type=new">
                 <Button className="w-fit">Add Address</Button>
               </NavLink>
+            </div>
+          ))}
+        {activeTab === UserTabs.Orders &&
+          (orders.length > 0 ? (
+            <div className="w-full flex flex-col items-center py-4 h-full overflow-hidden">
+              <h2 className="font-bold md:text-xl border-b w-full m-2 text-center">
+                Order Details
+              </h2>
+              <div className="w-full flex flex-wrap max-h-full overflow-scroll gap-4">
+                {orders.map((order: UserOrder, idx: number) => (
+                  <Order key={idx} order={order} />
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col justify-center items-center gap-4 mt-4">
+              <span className="md:text-xl">No Orders</span>
             </div>
           ))}
       </div>

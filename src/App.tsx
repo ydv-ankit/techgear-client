@@ -12,6 +12,7 @@ import { store } from "./lib/store/reduxStore";
 import Cart from "./routes/Cart";
 import Profile from "./routes/Profile";
 import NewAddress from "./routes/NewAddress";
+import OrderDetails from "./routes/OrderDetails";
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
                 <Route path="cart" element={<Cart />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="profile/address" element={<NewAddress />} />
+                <Route path="order/details" element={<OrderDetails />} />
                 <Route path="/dashboard">
                   <Route path="/dashboard" element={<Dashboard />} />
                 </Route>
