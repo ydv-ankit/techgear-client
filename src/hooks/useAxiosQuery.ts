@@ -12,7 +12,8 @@ type RequestDataType = {
   urlPath: string;
   method: RequestMethod;
   headers?: object;
-  data?: object | string | null;
+  data?: object | string;
+  withCredentials?: boolean;
 };
 
 type ResponseType<T = any> = {
@@ -36,7 +37,8 @@ export const useAxiosQuery = <T = any>(): ResponseType => {
       const axiosRequestObject: AxiosRequestConfig = {
         url: args.urlPath,
         method: args.method,
-        withCredentials: true,
+        withCredentials:
+          args.withCredentials !== undefined ? args.withCredentials : true,
         data: args.data,
       };
       if (args.headers) axiosRequestObject.headers = args.headers;
