@@ -1,16 +1,59 @@
 import { Button } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/hooks/store";
+import { RequestMethod, useAxiosQuery } from "@/hooks/useAxiosQuery";
 import { remove } from "@/lib/store/features/cart";
 import { cn } from "@/lib/utils";
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { toast } from "./ui/use-toast";
+import { ProductData } from "@/types/product";
 
 export const CartItems = () => {
   const { items } = useAppSelector((state) => state.cart);
+  const { error, loading, requestFunction } = useAxiosQuery();
   const dispatch = useAppDispatch();
+
+  const onCreateOrder = async () => {
+    const total_price = items
+      .reduce(
+        (acc, item) =>
+          acc +
+          (item.discount > 0
+            ? item.price - (item.discount * item.price) / 100
+            : item.price),
+        0,
+      )
+      .toFixed(2);
+    const products = items.map((item: ProductData) => item.name);
+    const orderPayload = {
+      total_price,
+      products,
+    };
+    const responseData = await requestFunction({
+      urlPath: `${import.meta.env.VITE_SERVER_URL}/api/v1/order`,
+      method: RequestMethod.POST,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: orderPayload,
+    });
+    const redirectLink = responseData?.data.data.link;
+    window.location = redirectLink;
+  };
 
   const onRemove = (id: string) => {
     dispatch(remove(id));
   };
+
+  useEffect(() => {
+    if (error) {
+      toast({
+        title: "Error",
+        description: error,
+      });
+    }
+  }, [error]);
+
   return (
     <div className="flex flex-col items-center">
       {items.length === 0 && (
@@ -93,9 +136,13 @@ export const CartItems = () => {
                 .toFixed(2)}
             </div>
           </div>
-          <NavLink to={"/checkout"}>
-            <Button className="mt-4">Checkout</Button>
-          </NavLink>
+          <Button
+            className="mt-4"
+            onClick={() => onCreateOrder()}
+            disabled={loading}
+          >
+            Checkout
+          </Button>
         </div>
       )}
     </div>
