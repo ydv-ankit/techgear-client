@@ -17,7 +17,6 @@ export const ProductTable = ({
   data: ProductData[];
 }): React.ReactElement => {
   const { error, loading, requestFunction, responseData } = useAxiosQuery();
-  console.log(error, loading, responseData);
 
   const onDelete = (id: string) => {
     requestFunction({
@@ -81,9 +80,16 @@ export const ProductTable = ({
               {product.image}
             </TableCell>
             <TableCell className="hover:underline cursor-pointer">
-              {product.rating}
+              {product.rating === null ? "0" : product?.rating}
             </TableCell>
-            <TableCell onClick={() => onDelete(product.id)}>Delete</TableCell>
+            <TableCell>
+              <div
+                className="bg-red-500 p-2 rounded-md cursor-pointer hover:bg-red-700"
+                onClick={() => onDelete(product.id)}
+              >
+                Delete
+              </div>
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>

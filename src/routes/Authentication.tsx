@@ -80,13 +80,15 @@ export default function Authentication(): React.ReactElement {
         title: "Error",
         description: error,
       });
-    } else if (responseData) {
+    }
+    if (responseData) {
       dispatch(login(responseData.data.user));
       toast({
         title: "Success",
         description: "Logged in successfully",
       });
-      navigate("/");
+      if (responseData?.data?.user.role === "admin") navigate("/dashboard");
+      else navigate("/");
     }
   }, [error, responseData]);
 

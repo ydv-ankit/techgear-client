@@ -5,9 +5,11 @@ import { useAppSelector } from "@/hooks/store";
 import { CartIcon } from "./CartIcon";
 import { Logout } from "./Logout";
 import { cn } from "@/lib/utils";
+import { HamburgerMenuIcon, Cross1Icon } from "@radix-ui/react-icons";
 
 export function Navbar(): React.ReactElement {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const [isNavbarOpen, setIsNavbarOpen] = useState<boolean>(false);
   const [navItems, setNavItems] = useState([
     {
       name: "Home",
@@ -42,9 +44,12 @@ export function Navbar(): React.ReactElement {
   }, [isAuthenticated]);
 
   return (
-    <nav className="p-2 w-full border-b border-b-blue-900">
-      <div className="md:w-3/5 flex justify-between mx-auto">
-        <div>Logo</div>
+    <nav className="p-2 w-full bg-blue-900 z-10">
+      <div className="md:flex md:w-3/5 hidden justify-between mx-auto">
+        <div className="flex items-center justify-center gap-2">
+          <img src="logo.png" alt="logo" className="w-6 h-6 antialiased" />
+          <span className="italic font-bold">TechGear</span>
+        </div>
         <div>
           <ul className="flex md:gap-4 text-sm">
             {navItems.map((item, idx) => {
@@ -85,6 +90,63 @@ export function Navbar(): React.ReactElement {
           {isAuthenticated && <Logout />}
           <ThemeToggle />
         </div>
+      </div>
+      <div
+        className={cn(
+          isNavbarOpen ? "h-fit" : "h-8",
+          "md:hidden md:w-3/5 flex flex-col justify-between mx-auto items-center",
+        )}
+      >
+        <div className="flex justify-between h-8 items-center w-full">
+          {isNavbarOpen ? (
+            <Cross1Icon onClick={() => setIsNavbarOpen(!isNavbarOpen)} />
+          ) : (
+            <HamburgerMenuIcon onClick={() => setIsNavbarOpen(!isNavbarOpen)} />
+          )}
+          <div className="flex justify-center items-center gap-2 md:gap-4">
+            <NavLink
+              to={"/cart"}
+              className={({ isActive }) =>
+                cn(
+                  isActive
+                    ? "bg-green-400 text-zinc-700 p-2"
+                    : "p-2 hover:bg-green-800",
+                  "rounded-full",
+                )
+              }
+            >
+              {isAuthenticated && <CartIcon />}
+            </NavLink>
+            {isAuthenticated && <Logout />}
+            <ThemeToggle />
+          </div>
+        </div>
+        {isNavbarOpen && (
+          <div>
+            <ul className="flex flex-col gap-4 text-sm">
+              {navItems.map((item, idx) => {
+                return (
+                  <li className="px-2 py-1" key={idx}>
+                    <NavLink
+                      to={item.href}
+                      className={({ isActive }) =>
+                        cn(
+                          isActive
+                            ? "bg-green-400 text-zinc-700 p-2"
+                            : "p-2 hover:bg-green-800",
+                          "selection:text-current rounded-md",
+                        )
+                      }
+                      onClick={() => setIsNavbarOpen(!isNavbarOpen)}
+                    >
+                      {item.name}
+                    </NavLink>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
       </div>
     </nav>
   );

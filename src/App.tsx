@@ -14,25 +14,28 @@ import Profile from "./routes/Profile";
 import NewAddress from "./routes/NewAddress";
 import OrderDetails from "./routes/OrderDetails";
 import Checkout from "./routes/Checkout";
+import { ProtectedRoute } from "./routes/ProtectedRoute";
 
 export default function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Provider store={store}>
-        <div className="overflow-hidden h-screen bg-light-background text-light-text dark:bg-custom-gradient dark:text-dark-text">
+        <div className="overflow-hidden h-screen bg-light-background text-light-text dark:bg-custom-gradient dark:text-dark-text pb-14">
           <BrowserRouter>
             <Navbar />
             <Routes>
               <Route path="/">
                 <Route path="/" element={<Home />} />
                 <Route path="auth" element={<Authentication />} />
-                <Route path="cart" element={<Cart />} />
-                <Route path="profile" element={<Profile />} />
-                <Route path="profile/address" element={<NewAddress />} />
-                <Route path="order/details" element={<OrderDetails />} />
-                <Route path="checkout" element={<Checkout />} />
-                <Route path="/dashboard">
-                  <Route path="/dashboard" element={<Dashboard />} />
+                <Route element={<ProtectedRoute />}>
+                  <Route path="profile" element={<Profile />} />
+                  <Route path="cart" element={<Cart />} />
+                  <Route path="profile/address" element={<NewAddress />} />
+                  <Route path="order/details" element={<OrderDetails />} />
+                  <Route path="checkout" element={<Checkout />} />
+                  <Route path="/dashboard">
+                    <Route path="/dashboard" element={<Dashboard />} />
+                  </Route>
                 </Route>
               </Route>
               <Route path="*" element={<RouteNotFound />} />

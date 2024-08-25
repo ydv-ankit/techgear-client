@@ -1,6 +1,8 @@
 import { AddProductForm } from "@/components/dashboard/AddProductForm";
+import { Orders } from "@/components/dashboard/Orders";
 import Products from "@/components/dashboard/Products";
 import { Button } from "@/components/ui/button";
+import { useAppSelector } from "@/hooks/store";
 import { cn } from "@/lib/utils";
 import React, { useState } from "react";
 
@@ -36,6 +38,8 @@ const tabs: tabsType[] = [
 ];
 
 export default function Dashboard(): React.ReactElement {
+  const { user } = useAppSelector((state) => state.auth);
+
   const [selectedTab, setSelectedTab] = useState<Tab>(Tab.OVERVIEW);
 
   return (
@@ -48,8 +52,8 @@ export default function Dashboard(): React.ReactElement {
             className="w-12 ring-1 ring-white rounded-full"
           />
           <div className="flex flex-col ml-4">
-            <span className="text-dark-text">Full name</span>
-            <span className="text-dark-text/50 text-sm">email@id.com</span>
+            <span className="text-dark-text">{user?.name}</span>
+            <span className="text-dark-text/50 text-sm">{user?.email}</span>
           </div>
         </div>
         <div className="w-full">
@@ -72,6 +76,7 @@ export default function Dashboard(): React.ReactElement {
       <div className="dark:bg-dark-background bg-slate-300 border-t border-t-dark-component p-2 w-5/6">
         {selectedTab === Tab.PRODUCTS && <Products />}
         {selectedTab === Tab.ADDPRODUCT && <AddProductForm />}
+        {selectedTab === Tab.ORDERS && <Orders />}
       </div>
     </div>
   );

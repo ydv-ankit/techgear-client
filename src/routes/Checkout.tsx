@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { RequestMethod, useAxiosQuery } from "@/hooks/useAxiosQuery";
+import { PAYMENT_STATUS } from "@/types/user";
 import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
@@ -41,6 +42,16 @@ export default function Checkout() {
       }
     })();
   }, [paymentToken]);
+
+  useEffect(() => {
+    requestFunction({
+      urlPath: `${import.meta.env.VITE_SERVER_URL}/api/v1/order/${paymentToken}`,
+      method: RequestMethod.PUT,
+      data: {
+        payment_status: PAYMENT_STATUS.SUCCESS,
+      },
+    });
+  }, [orderStatus]);
 
   useEffect(() => {
     if (error) {

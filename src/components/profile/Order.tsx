@@ -1,4 +1,4 @@
-import { UserOrder } from "@/types/user";
+import { PAYMENT_STATUS, UserOrder } from "@/types/user";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { NavLink } from "react-router-dom";
@@ -13,7 +13,10 @@ export const Order = ({ order }: { order: UserOrder }) => {
         </div>
         <div className="flex">
           <div className="font-bold">Total Price:</div>
-          <div className="mx-2">{order?.payment_price}</div>
+          <div className="mx-2">
+            {"$ "}
+            {order?.payment_price}
+          </div>
         </div>
         <div className="flex">
           <div className="font-bold">Ordered At:</div>
@@ -29,7 +32,7 @@ export const Order = ({ order }: { order: UserOrder }) => {
           <div className="font-bold">Payment Status</div>
           <div
             className={cn(
-              order?.payment_status === "SUCCESS"
+              order?.payment_status === PAYMENT_STATUS.SUCCESS
                 ? "bg-green-800"
                 : "bg-violet-500",
               "p-1 rounded-md mx-2 text-sm font-bold text-white",

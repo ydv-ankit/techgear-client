@@ -1,7 +1,9 @@
+import { Spinner } from "@/components/Spinner";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { RequestMethod, useAxiosQuery } from "@/hooks/useAxiosQuery";
-import { UserOrder } from "@/types/user";
+import { cn } from "@/lib/utils";
+import { PAYMENT_STATUS, UserOrder } from "@/types/user";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -29,16 +31,15 @@ export default function OrderDetails() {
       goBack();
     }
     if (responseData) {
-      console.log(responseData);
       setOrder(responseData.data);
     }
   }, [error, responseData]);
   if (error) return;
-  if (loading) return "loading";
+  if (loading) return <Spinner />;
   if (order)
     return (
-      <div className="flex flex-col items-center">
-        <h1 className="font-bold text-3xl my-2">Order Details</h1>
+      <div className="flex flex-col items-center h-[93dvh] overflow-y-scroll">
+        <h1 className="font-bold text-3xl my-2 underline">Order Details</h1>
         <div className="mt-4 space-y-2">
           <div className="flex gap-2 text-xl">
             <div className="font-bold">Order ID:</div>
@@ -56,12 +57,11 @@ export default function OrderDetails() {
             <div className="font-bold">Products</div>
             <div>
               {order?.products?.length! > 0 ? (
-                <ul className="font-semibold">
+                <ul className="pl-4 text-lg">
                   {order?.products.map((product: string, idx: number) => (
-                    <div key={idx} className="ml-6">
-                      {`${idx + 1}. `}
+                    <li key={idx} className="ml-6 max-w-96 list-decimal mb-2">
                       {product}
-                    </div>
+                    </li>
                   ))}
                 </ul>
               ) : (
@@ -79,7 +79,16 @@ export default function OrderDetails() {
           </div>
           <div className="flex gap-2 text-xl">
             <div className="font-bold">Payment Status</div>
-            <div>Status</div>
+            <div
+              className={cn(
+                order?.payment_status === PAYMENT_STATUS.PENDING
+                  ? "bg-violet-500"
+                  : "bg-green-800",
+                "p-1 rounded-md text-sm",
+              )}
+            >
+              {order?.payment_status}
+            </div>
           </div>
           <Button className="w-full max-w-60" onClick={() => goBack()}>
             Go Back

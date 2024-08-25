@@ -1,4 +1,6 @@
 import { ProductCard } from "@/components/ProductCard";
+import { Spinner } from "@/components/Spinner";
+import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { RequestMethod, useAxiosQuery } from "@/hooks/useAxiosQuery";
 import { ProductData } from "@/types/product";
@@ -22,11 +24,22 @@ export default function Home(): React.ReactElement {
       });
     }
   }, [error, responseData]);
+  if (loading)
+    return (
+      <div className="w-screen h-screen overflow-hidden">
+        <Spinner />
+      </div>
+    );
+  if (error)
+    return (
+      <div className="text-red-700 flex flex-col gap-4 items-center justify-center w-screen h-screen md:text-3xl">
+        {error}
+        <Button onClick={() => window.location.reload()}>Try again</Button>
+      </div>
+    );
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 p-4 gap-4 overflow-auto h-full">
-      {loading && <div>Loading...</div>}
-      {error && <div>{error}</div>}
       {responseData &&
         responseData.data.map((product: ProductData, idx: number) => (
           <ProductCard data={product} key={idx} />

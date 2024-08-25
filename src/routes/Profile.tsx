@@ -1,5 +1,5 @@
-import { AddressCard } from "@/components/profiile/AddressCard";
-import { Order } from "@/components/profiile/Order";
+import { AddressCard } from "@/components/profile/AddressCard";
+import { Order } from "@/components/profile/Order";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { RequestMethod, useAxiosQuery } from "@/hooks/useAxiosQuery";
