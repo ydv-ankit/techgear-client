@@ -10,6 +10,7 @@ import { RequestMethod, useAxiosQuery } from "@/hooks/useAxiosQuery";
 import React, { useEffect } from "react";
 import { toast } from "../ui/use-toast";
 import { ProductData } from "@/types/product";
+import { Spinner } from "../Spinner";
 
 export const ProductTable = ({
   data,
@@ -39,6 +40,8 @@ export const ProductTable = ({
       });
     }
   }, [error, responseData]);
+
+  if (loading) return <Spinner />;
 
   return (
     <Table>
