@@ -70,7 +70,7 @@ export const ProductTable = ({
             <TableCell className="hover:underline cursor-pointer font-medium text-nowrap">
               {product.id}
             </TableCell>
-            <TableCell className="hover:underline cursor-pointer">
+            <TableCell className="hover:underline cursor-pointer text-wrap line-clamp-3">
               {product.name}
             </TableCell>
             <TableCell className="hover:underline cursor-pointer">

@@ -7,7 +7,6 @@ import { cn } from "@/lib/utils";
 import React, { useState } from "react";
 
 enum Tab {
-  OVERVIEW,
   PRODUCTS,
   ADDPRODUCT,
   ORDERS,
@@ -20,27 +19,23 @@ type tabsType = {
 
 const tabs: tabsType[] = [
   {
-    label: "Overview",
-    action: Tab.OVERVIEW,
-  },
-  {
     label: "Products",
     action: Tab.PRODUCTS,
   },
   {
-    label: "Add Product",
-    action: Tab.ADDPRODUCT,
-  },
-  {
     label: "Orders",
     action: Tab.ORDERS,
+  },
+  {
+    label: "Add Product",
+    action: Tab.ADDPRODUCT,
   },
 ];
 
 export default function Dashboard(): React.ReactElement {
   const { user } = useAppSelector((state) => state.auth);
 
-  const [selectedTab, setSelectedTab] = useState<Tab>(Tab.OVERVIEW);
+  const [selectedTab, setSelectedTab] = useState<Tab>(Tab.PRODUCTS);
 
   return (
     <div className="flex flex-1 h-full">
