@@ -82,10 +82,10 @@ export default function Authentication(): React.ReactElement {
       });
     }
     if (responseData) {
-      dispatch(login(responseData.data.user));
+      if (responseData?.data?.user) dispatch(login(responseData.data.user));
       toast({
         title: "Success",
-        description: "Logged in successfully",
+        description: responseData?.data?.message || "",
       });
       if (responseData?.data?.user.role === "admin") navigate("/dashboard");
       else navigate("/");
