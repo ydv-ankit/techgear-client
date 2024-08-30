@@ -1,3 +1,4 @@
+import { Spinner } from "@/components/Spinner";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { RequestMethod, useAxiosQuery } from "@/hooks/useAxiosQuery";
@@ -8,10 +9,12 @@ import { NavLink, useLocation } from "react-router-dom";
 export default function Checkout() {
   const [orderStatus, setOrderStatus] = useState<string | null>(null);
   const urlQuery = new URLSearchParams(useLocation().search);
-  const { error, loading, requestFunction } = useAxiosQuery();
+  const { error, requestFunction } = useAxiosQuery();
+  const [loading, setLoading] = useState<boolean>(false);
   const paymentToken = urlQuery.get("token");
 
   useEffect(() => {
+    setLoading(true);
     (async () => {
       const username = import.meta.env.VITE_PAYPAL_AUTH_TOKEN_USERNAME;
       const password = import.meta.env.VITE_PAYPAL_AUTH_TOKEN_PASSWORD;
@@ -39,8 +42,11 @@ export default function Checkout() {
       });
       if (orderDetails?.data.status === "APPROVED") {
         setOrderStatus("SUCCESS");
+      } else if (orderDetails?.data.status === "PAYER_ACTION_REQUIRED") {
+        setOrderStatus("Payment not completed");
       }
     })();
+    setLoading(false);
   }, [paymentToken]);
 
   useEffect(() => {
@@ -62,7 +68,12 @@ export default function Checkout() {
     }
   }, [error]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Spinner />
+      </div>
+    );
 
   return (
     <div className="flex flex-col items-center gap-4">
@@ -74,8 +85,10 @@ export default function Checkout() {
               <div>Success...</div>
               Thank you for ordering !
             </div>
-          ) : (
+          ) : orderStatus === "PENDING" ? (
             <div className="text-xl text-red-600">Order failed !</div>
+          ) : (
+            <div className="text-xl text-red-600">{orderStatus}</div>
           )}
         </div>
         <NavLink to={"/"}>

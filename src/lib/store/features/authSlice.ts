@@ -6,6 +6,7 @@ export interface AuthState {
     id: string;
     name: string;
     email: string;
+    avatar: string;
   } | null;
 }
 
@@ -20,7 +21,12 @@ const authSlice = createSlice({
   reducers: {
     login: (
       state,
-      action: PayloadAction<{ id: string; name: string; email: string }>,
+      action: PayloadAction<{
+        id: string;
+        name: string;
+        email: string;
+        avatar: string;
+      }>,
     ) => {
       state.isAuthenticated = true;
       state.user = action.payload;

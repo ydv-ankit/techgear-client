@@ -35,7 +35,7 @@ export const AddressCard = ({ address }: { address: UserAddressType }) => {
   if (isDeleted) return null;
 
   return (
-    <div className="max-w-[800px] min-w-[600px] border border-blue-600 p-1 rounded-md">
+    <div className="w-full max-w-[800px] md:min-w-[600px] border border-blue-600 p-1 rounded-md">
       <div className="px-2 flex w-full gap-2">
         <div className="min-w-fit font-bold">Address Line 1 :</div>
         <div className="">{address.address_line_1}</div>

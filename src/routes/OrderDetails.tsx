@@ -38,7 +38,7 @@ export default function OrderDetails() {
   if (loading) return <Spinner />;
   if (order)
     return (
-      <div className="flex flex-col items-center h-[93dvh] overflow-y-scroll">
+      <div className="flex flex-col items-center h-[93dvh] overflow-y-scroll p-4">
         <h1 className="font-bold text-3xl my-2 underline">Order Details</h1>
         <div className="mt-4 space-y-2">
           <div className="flex gap-2 text-xl">
@@ -84,7 +84,7 @@ export default function OrderDetails() {
                 order?.payment_status === PAYMENT_STATUS.PENDING
                   ? "bg-violet-500"
                   : "bg-green-800",
-                "p-1 rounded-md text-sm",
+                "p-1 rounded-md text-sm text-white",
               )}
             >
               {order?.payment_status}

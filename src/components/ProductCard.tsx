@@ -55,20 +55,20 @@ export const ProductCard = ({
 
   return (
     <div className="sm:flex-1 border border-slate-600 flex flex-col justify-between p-2 rounded-sm h-[400px] gap-1 dark:bg-custom-gradient-2">
-      <div className="w-full h-56 rounded-lg overflow-hidden">
+      <div className="w-full max-h-56 h-56 rounded-lg overflow-hidden">
         <img
           src={data.image}
           alt="product_image"
-          className="object-cover w-full h-full"
+          className="w-full h-full object-contain bg-white"
         />
       </div>
       <div className="flex flex-col justify-center">
-        <div className="flex gap-3">
+        <div className="flex gap-3 mt-5">
           <div
             className={cn(
               data.discount > 0
                 ? "line-through text-sm text-slate-400"
-                : "text-white",
+                : "dark:text-white text-black",
               "",
             )}
           >
@@ -84,7 +84,7 @@ export const ProductCard = ({
             </div>
           )}
         </div>
-        <div className="font-bold line-clamp-2 my-2">{data.name}</div>
+        <div className="font-bold line-clamp-2 my-2 h-12">{data.name}</div>
         <div className="flex gap-1">
           {Array.from({ length: 5 }).map((_, index) => (
             <span key={index}>

@@ -14,7 +14,14 @@ export default function SessionProvider(): null {
       })
         .then((res) => {
           const user = res.data.data;
-          dispatch(login({ id: user.id, email: user.email, name: user.name }));
+          dispatch(
+            login({
+              id: user.id,
+              email: user.email,
+              name: user.name,
+              avatar: user.avatar,
+            }),
+          );
           return;
         })
         .catch(() => {

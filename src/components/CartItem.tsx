@@ -3,14 +3,15 @@ import { useAppDispatch, useAppSelector } from "@/hooks/store";
 import { RequestMethod, useAxiosQuery } from "@/hooks/useAxiosQuery";
 import { remove } from "@/lib/store/features/cart";
 import { cn } from "@/lib/utils";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { toast } from "./ui/use-toast";
 import { ProductData } from "@/types/product";
 
 export const CartItems = () => {
   const { items } = useAppSelector((state) => state.cart);
-  const { error, loading, requestFunction } = useAxiosQuery();
+  const { error, requestFunction } = useAxiosQuery();
+  const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
   // Memoize the total price calculation
@@ -27,6 +28,7 @@ export const CartItems = () => {
   }, [items]);
 
   const onCreateOrder = async () => {
+    setLoading(true);
     const products = items.map((item: ProductData) => item.name);
     const orderPayload = {
       total_price: totalPrice,
@@ -50,6 +52,8 @@ export const CartItems = () => {
         title: "Error",
         description: "An error occurred while creating the order.",
       });
+    } finally {
+      setLoading(false);
     }
   };
 

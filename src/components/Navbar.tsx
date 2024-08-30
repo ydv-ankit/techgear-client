@@ -44,7 +44,7 @@ export function Navbar(): React.ReactElement {
   }, [isAuthenticated]);
 
   return (
-    <nav className="p-2 w-full bg-blue-900 z-10">
+    <nav className="p-2 w-full z-10 border-b">
       <div className="md:flex md:w-3/5 hidden justify-between mx-auto">
         <div className="flex items-center justify-center gap-2">
           <img src="logo.png" alt="logo" className="w-6 h-6 antialiased" />

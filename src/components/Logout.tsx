@@ -27,9 +27,9 @@ export const Logout = (): React.ReactElement => {
       });
     }
     if (responseData) {
+      navigate("/");
       dispatch(logout());
       dispatch(emptyCart());
-      navigate("/");
     }
   }, [error, responseData]);
 

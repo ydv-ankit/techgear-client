@@ -93,10 +93,10 @@ export default function Authentication(): React.ReactElement {
   }, [error, responseData]);
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center md:items-center h-screen mt-10 md:mt-0">
       <Tabs
         defaultValue="signin"
-        className="w-[400px] border border-zinc-800 rounded-md p-2 pb-4 bg-custom-gradient-2"
+        className="w-[400px] md:border border-zinc-800 rounded-md p-2 pb-4 md:bg-custom-gradient-2"
       >
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="signin">Sign In</TabsTrigger>
@@ -108,14 +108,14 @@ export default function Authentication(): React.ReactElement {
               onSubmit={signInForm.handleSubmit(onSignIn)}
               className="flex flex-col space-y-4 p-4"
             >
-              <Label>Sign in to continue</Label>
+              <Label className="text-white">Sign in to continue</Label>
               <FormField
                 control={signInForm.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input {...field} placeholder="Email ID" />
+                      <Input {...field} placeholder="Email ID" type="email" />
                     </FormControl>
                   </FormItem>
                 )}
@@ -126,7 +126,11 @@ export default function Authentication(): React.ReactElement {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input {...field} placeholder="Password" />
+                      <Input
+                        {...field}
+                        placeholder="Password"
+                        type="password"
+                      />
                     </FormControl>
                   </FormItem>
                 )}
@@ -143,7 +147,7 @@ export default function Authentication(): React.ReactElement {
               onSubmit={signUpForm.handleSubmit(onSignUp)}
               className="flex flex-col space-y-4 p-4"
             >
-              <Label>Create new account</Label>
+              <Label className="text-white">Create new account</Label>
               <FormField
                 control={signUpForm.control}
                 name="name"
@@ -172,7 +176,11 @@ export default function Authentication(): React.ReactElement {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input {...field} placeholder="Password" />
+                      <Input
+                        {...field}
+                        placeholder="Password"
+                        type="password"
+                      />
                     </FormControl>
                   </FormItem>
                 )}
@@ -183,14 +191,18 @@ export default function Authentication(): React.ReactElement {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input {...field} placeholder="Confirm Password" />
+                      <Input
+                        {...field}
+                        placeholder="Confirm Password"
+                        type="password"
+                      />
                     </FormControl>
                     <FormMessage className="dark:text-red-400" />
                   </FormItem>
                 )}
               />
               <Button className="w-full" disabled={loading}>
-                Sign In
+                Sign Up
               </Button>
             </form>
           </Form>
