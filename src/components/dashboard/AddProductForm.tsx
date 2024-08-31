@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/components/ui/use-toast";
 import { RequestMethod, useAxiosQuery } from "@/hooks/useAxiosQuery";
+import { Label } from "../ui/label";
 
 const ProductForm = z.object({
   name: z.string().min(2, "product name required"),
@@ -92,6 +93,7 @@ export function AddProductForm(): React.ReactElement {
             name="name"
             render={({ field }) => (
               <FormItem>
+                <Label>Product Name</Label>
                 <FormControl>
                   <Input placeholder="Product name" {...field} />
                 </FormControl>
@@ -104,6 +106,7 @@ export function AddProductForm(): React.ReactElement {
             name="price"
             render={({ field }) => (
               <FormItem>
+                <Label>Price</Label>
                 <FormControl>
                   <Input
                     placeholder="Price"
@@ -145,6 +148,7 @@ export function AddProductForm(): React.ReactElement {
             name="discount"
             render={({ field }) => (
               <FormItem>
+                <Label>Discount percentage</Label>
                 <FormControl>
                   <Input
                     placeholder="Discount % (if any)"
