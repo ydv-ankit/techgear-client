@@ -42,22 +42,19 @@ export default function Checkout() {
       });
       if (orderDetails?.data.status === "APPROVED") {
         setOrderStatus("SUCCESS");
+        requestFunction({
+          urlPath: `${import.meta.env.VITE_SERVER_URL}/api/v1/order/${paymentToken}`,
+          method: RequestMethod.PUT,
+          data: {
+            payment_status: PAYMENT_STATUS.SUCCESS,
+          },
+        });
       } else if (orderDetails?.data.status === "PAYER_ACTION_REQUIRED") {
         setOrderStatus("Payment not completed");
       }
     })();
     setLoading(false);
   }, [paymentToken]);
-
-  useEffect(() => {
-    requestFunction({
-      urlPath: `${import.meta.env.VITE_SERVER_URL}/api/v1/order/${paymentToken}`,
-      method: RequestMethod.PUT,
-      data: {
-        payment_status: PAYMENT_STATUS.SUCCESS,
-      },
-    });
-  }, [orderStatus]);
 
   useEffect(() => {
     if (error) {
