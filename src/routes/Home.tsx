@@ -40,6 +40,9 @@ export default function Home(): React.ReactElement {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 p-4 gap-4 overflow-auto h-full">
+      {responseData && responseData.data.length === 0 && (
+        <div className="text-center md:text-2xl">No products to show</div>
+      )}
       {responseData &&
         responseData.data.map((product: ProductData, idx: number) => (
           <ProductCard data={product} key={idx} />
