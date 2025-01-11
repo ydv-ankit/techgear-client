@@ -8,6 +8,7 @@
 
 ### Admin credentials
 
+- ROUTE: `/dashboard`
 - email id: `ankit@admin.com`
 - password: `Ankit@admin123`
 
