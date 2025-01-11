@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { HamburgerMenuIcon, Cross1Icon } from "@radix-ui/react-icons";
 
 export function Navbar(): React.ReactElement {
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { isAuthenticated, user } = useAppSelector((state) => state.auth);
   const [isNavbarOpen, setIsNavbarOpen] = useState<boolean>(false);
   const [navItems, setNavItems] = useState([
     {
@@ -19,16 +19,33 @@ export function Navbar(): React.ReactElement {
 
   useEffect(() => {
     if (isAuthenticated) {
-      setNavItems([
-        {
-          name: "Home",
-          href: "/",
-        },
-        {
-          name: "Profile",
-          href: "/profile",
-        },
-      ]);
+      if (user?.email === "ankit@admin.com") {
+        setNavItems([
+          {
+            name: "Home",
+            href: "/",
+          },
+          {
+            name: "Profile",
+            href: "/profile",
+          },
+          {
+            name: "Dashboard",
+            href: "/dashboard",
+          },
+        ]);
+      } else {
+        setNavItems([
+          {
+            name: "Home",
+            href: "/",
+          },
+          {
+            name: "Profile",
+            href: "/profile",
+          },
+        ]);
+      }
     } else {
       setNavItems([
         {

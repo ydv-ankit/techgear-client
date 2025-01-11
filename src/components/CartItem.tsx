@@ -89,7 +89,7 @@ export const CartItems = () => {
           className="flex justify-between p-2 dark:bg-dark-component md:w-3/5 w-full m-2 rounded-lg"
         >
           <div className="flex">
-            <div className="m-1 rounded-lg overflow-hidden w-14 h-14">
+            <div className="m-1 rounded-lg overflow-hidden min-w-14 min-h-14">
               <img
                 src={item.image}
                 alt={item.name}

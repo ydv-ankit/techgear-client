@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useAppDispatch } from "./hooks/store";
 import axios from "axios";
 import { login } from "./lib/store/features/authSlice";
+import { toast } from "./components/ui/use-toast";
 
 export default function SessionProvider(): null {
   const dispatch = useAppDispatch();
@@ -24,7 +25,16 @@ export default function SessionProvider(): null {
           );
           return;
         })
-        .catch(() => {
+        .catch((err) => {
+          if (
+            err.response.status === 401 &&
+            window.location.pathname !== "/auth"
+          ) {
+            toast({
+              title: "Error",
+              description: "Login required",
+            });
+          }
           return;
         });
     })();

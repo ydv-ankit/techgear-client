@@ -111,9 +111,10 @@ export function AddProductForm(): React.ReactElement {
                   <Input
                     placeholder="Price"
                     {...field}
-                    onChange={(e) =>
-                      field.onChange(parseInt(e.target.value, 10))
-                    }
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      field.onChange(value === "" ? 0 : parseInt(value, 10));
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -148,14 +149,15 @@ export function AddProductForm(): React.ReactElement {
             name="discount"
             render={({ field }) => (
               <FormItem>
-                <Label>Discount percentage</Label>
+                <Label>Discount (%)</Label>
                 <FormControl>
                   <Input
                     placeholder="Discount % (if any)"
                     {...field}
-                    onChange={(e) =>
-                      field.onChange(parseInt(e.target.value, 10))
-                    }
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      field.onChange(value === "" ? 0 : parseInt(value, 10));
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
