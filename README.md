@@ -1,3 +1,6 @@
+## Techgear Client
+[Techgear server](https://github.com/ydv-ankit/techgear-server/)
+
 - tinify -> image compressor
 - react-spring -> animations
 
